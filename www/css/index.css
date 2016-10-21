@@ -1,0 +1,30 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.app {
+	width: 100%;
+  	text-align: center;
+}
+
+a:link, a:visited {
+    background-color: #008CBA;
+    color: white;
+    padding: 14px 14px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: auto;
+    height: 30px;
+    width: 50%;
+    margin-top: 4px;
+}
+
+
+a:hover, a:active {
+    background-color: #87CEFA;
+}

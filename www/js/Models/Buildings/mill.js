@@ -4,14 +4,19 @@ function Mill(id, coordinates) {
         "Mill",
         100,
         3,
+        3,
         coordinates
     );
 }
 
 Mill.prototype = {
-    getProfit: function() {
-        //zabiera dla domowników hajs procentowy zależnie od ustawionej daniny
-        //myśle że jakiś timestamp by się przydał
+    createResources: function() {
+        for (i in this.people) {
+            if (this.resources.gold > 10) {
+                this.resources.gold.addRemove(-10, 0, 5);
+                city.getPerson(this.people[i]);
+            }
+        }
     }
 }
 

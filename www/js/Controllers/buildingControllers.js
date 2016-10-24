@@ -9,6 +9,7 @@ BuildingController.dehydrate = function(building, object) {
     object.people = building.people;
     object.maxPoeple = building.maxPoeple;
     object.coordinates = building.coordinates;
+    object.resources = ResourcesController.dehydrate(building.resources);
     return object;
 }
 
@@ -16,7 +17,6 @@ HouseController = function() {}
 
 HouseController.dehydrate = function(house) {
     var house = BuildingController.dehydrate(house, new House());
-    
     return house;
 }
 

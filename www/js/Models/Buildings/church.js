@@ -4,6 +4,7 @@ function Church(id, coordinates) {
         "Church",
         100,
         3,
+        4,
         coordinates
     );
 }

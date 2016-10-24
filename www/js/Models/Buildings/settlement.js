@@ -4,6 +4,7 @@ function Settlement(id, coordinates) {
         "Settlement",
         100,
         3,
+        5,
         coordinates
     );
 }

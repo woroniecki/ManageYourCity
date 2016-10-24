@@ -4,9 +4,9 @@ function House(id, coordinates) {
         "House",
         100,
         3,
+        2,
         coordinates
     );
-    this.maxPeople = 2;
 }
 
 House.prototype = {

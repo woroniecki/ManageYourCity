@@ -4,19 +4,23 @@ function Sawmill(id, coordinates) {
         "Sawmill",
         100,
         3,
+        4,
         coordinates
     );
 }
 
 Sawmill.prototype = {
-    isPossibleToGetSalary: function() {
-        if (Resources.gold > 0) /*gold sawmill setting*/
-            return true;
-        return false;
-    },
-    getProfit: function() {
-        //zabiera dla domowników hajs procentowy zależnie od ustawionej daniny
-        //myśle że jakiś timestamp by się przydał
+    createResources: function() {
+        for (i in this.people) {
+            if (this.resources.gold > 10) {
+                this.resources.gold.addRemove(-10, 3, 0);
+                city.getPerson(this.people[i]).resources.addRemove(5,0,0);
+            }else{
+                city.getPerson(this.people[i]).workResignation();
+                this.people.splice(i, 1);
+                i--;
+            }
+        }
     }
 }
 

@@ -1,19 +1,10 @@
 CityController = function() {
     this.intervalSave = window.setInterval(this.save.bind(this), 500);
-    this.eventControlling();
 }
 
 CityController.prototype = {
     init: function() {
         this.city = city;
-    },
-    eventControlling: function() {
-        if (window.location.href.indexOf("game") > -1) {
-            $("body").keypress(function(e) {
-                if (e.which == 13) //up
-                    window.location = "build.html";
-            });
-        }
     },
     dehydrate: function(city) {
         this.city.player = playerController.dehydrate(city.player);
@@ -22,7 +13,6 @@ CityController.prototype = {
             this.city.houses.push(HouseController.dehydrate(city.houses[i]));
         }
         this.city.buildings = [];
-        
         for (i in city.buildings) {
             if (city.buildings[i].name == "Mill")
                 this.city.buildings.push(MillController.dehydrate(city.buildings[i]));
@@ -34,6 +24,11 @@ CityController.prototype = {
                 this.city.buildings.push(ChurchController.dehydrate(city.buildings[i]));
         }
         this.city.people = [];
+        for (i in city.people) {
+            this.city.people.push(PersonController.dehydrate(city.people[i]));
+        }
+        this.city.resources = ResourcesController.dehydrate(city.resources);
+        console.log(city);
         reload();
     },
     save: function() {

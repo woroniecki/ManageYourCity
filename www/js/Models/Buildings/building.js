@@ -7,9 +7,9 @@ function Building(id, name, cost, maxlevel, maxPeople, coordinates) {
     this.people = [];
     this.maxPoeple = maxPeople;
     this.coordinates = coordinates;
-    this.resources = new Resources();
+    this.resources = new Resources(0,0,0);
     this.update = function() {
-
+        
     };
     this.updateUpgrade = function() {
         //jeśli zupgradowało
@@ -39,3 +39,8 @@ function Building(id, name, cost, maxlevel, maxPeople, coordinates) {
 Building.prototype = {
 
 }
+/*
+Szymon kłos - znajomość języków Java, Python. Wiedza na temat najnowszych technologii oraz trendów w dziedzinie programowania.
+Doświadczenie w pracy w grupie. Świetna komunikatywność, oraz sposób przekazywania wiedzy w zrozumiały sposób.
+Umiejętności te pozwolą na tworzenie kursów zrozumiałych dla wszystkich oraz znakomitą pomoc podczas lekcji online z klientami. 
+*/

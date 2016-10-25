@@ -88,6 +88,3 @@ Menu.prototype = {
 }
 
 var menu = new Menu();
-
-
-

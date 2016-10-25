@@ -1,9 +1,3 @@
-function Resources(){
-	this.gold = 0;
-	this.wood = 0;
-	this.food = 0;
-}
-
 function Resources(gold, wood, food){
 	this.gold = gold;
 	this.wood = wood;

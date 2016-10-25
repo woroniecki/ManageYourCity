@@ -3,13 +3,22 @@ function City() {
     this.buildings = [];
     this.people = [];
     this.player = new Player();
-    this.resources = new Resources();
+    this.resources = new Resources(0, 0, 0);
     this.widthheight = [25, 60];
+
+    this.lastArrivalNewPeopleTime = new Date().getTime();
+    this.arrivalNewPeopleStamp = 0;
+
+    this.lastGetMoneyTime = new Date().getTime();
+    this.getMonetStamp = 0;
 }
 
 City.prototype = {
     update: function() {
-
+        this.arrivalNewPeople();
+        this.getMoney();
+        this.updateBuildings();
+        this.updatePeople();    
     },
     buildBuilding: function(name) {
         if (name == "House") {
@@ -35,30 +44,43 @@ City.prototype = {
         reload();
     },
     updateHouses: function() {
-        
+
     },
     updateBuildings: function() {
-        
+        for (i in this.buildings) {
+            this.buildings[i].update();
+        }
     },
     updatePeople: function() {
-        
+        for (i in this.people) {
+            this.people[i].update();
+        }
+    },
+    getDailyProfit: function() {
+        this.resources.addRemove(this.people.length * 30, 0, 0);
     },
     arrivalNewPeople: function() {
         if (this.amountFreePlacesInHouses() > 0) {
             if (this.people.length < 2) {
                 this.createNewPerson();
             } else {
-                if (Math.floor(Math.random() * 100) < this.getAveragePeopleHealth()) {
-                    this.createNewPerson();
+                if (this.lastArrivalNewPeopleTime + this.arrivalNewPeopleStamp > new Date().getTime()) {
+                    if (Math.floor(Math.random() * 100) < this.getAveragePeopleHealth()) {
+                        this.createNewPerson();
+                    }
+                    this.lastArrivalNewPeopleTimes += this.arrivalNewPeopleStamp;
                 }
             }
         }
+        s
     },
     getAveragePeopleHealth: function() {
         var averageHealth = 0;
         for (i in this.people) {
             averageHealth += this.people[i].getHealth();
         }
+        if (this.people.length <= 0)
+            return " - ";
         return averageHealth / this.people.length;
     },
     createNewPerson: function() {
@@ -82,8 +104,23 @@ City.prototype = {
             amount += this.houses[i].getPeopleAmount();
         return amount;
     },
-    findJobFor: function() {
-
+    findJobFor: function(id) {
+        var buildingWithPlacesToWorkIds = [];
+        for (i in this.buildins) {
+            if (this.buildins[i].getPeopleAmount() > 0)
+                buildingWithPlacesToWorkIds.push(i);
+        }
+        if (!buildingWithPlacesToWorkIds.length > 0)
+            return;
+        var buildingI = buildingWithPlacesToWorkIds[Math.floor(Math.random() * buildingWithPlacesToWorkIds.length)]
+        this.getPerson(id).hiredIn = this.buildings[buildingI];
+        this.buildings[buildingI].addPerson(id);
+    },
+    getMoney: function() {
+        if (this.lastGetMoneyTime + this.getMonetStamp > new Date.getTime()) {
+            this.resources.addRemove(this.people.length * 50, 0, 0);
+            this.lastGetMoneyTime += this.getMonetStamp;
+        }
     },
     getPerson: function(id) {
         for (i in this.people)

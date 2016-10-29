@@ -1,19 +1,23 @@
-function Building(id, name, cost, maxlevel, maxPeople, coordinates) {
+function Building(id, name, maxlevel, maxPeople, coordinates, upgradeStamp) {
     this.id = id;
     this.name = name;
-    this.cost = cost;
     this.level = 1;
     this.maxlevel = maxlevel;
     this.people = [];
-    this.maxPoeple = maxPeople;
+    this.maxPeople = maxPeople;
     this.coordinates = coordinates;
     this.resources = new Resources(0,0,0);
-    this.update = function() {
-        
-    };
-    this.updateUpgrade = function() {
-        //jeśli zupgradowało
-        //zwiekszyc przyrost ale to w dziedziczeniu i lb miejsc napewno
+
+    this.lastCreateResourcesTime = new Date().getTime();
+    this.createResourcesStamp = 12 * time;
+
+    this.upgrade = function() {
+        if(this.level >= this.maxlevel)
+            return;
+        if(city.takeUpgradeBuildingCost(BuildingController.getUpgradeCost(this.name, this.level))){
+            this.level = this.level + 1;
+            this.maxPeople = this.maxPeople + 1;
+        }
     };
     this.getPeopleAmount = function() {
         return poeple.length();
@@ -23,7 +27,7 @@ function Building(id, name, cost, maxlevel, maxPeople, coordinates) {
             return (this.level + 1) * cost;
     };
     this.getPeopleAmount = function() {
-        return (this.maxPoeple - this.people.length);
+        return (this.maxPeople - this.people.length);
     };
     this.getCost = function() {
         return this.cost;
@@ -31,8 +35,20 @@ function Building(id, name, cost, maxlevel, maxPeople, coordinates) {
     this.addPerson = function(id) {
     	this.people.push(id);
     };
-    this.createResources = function(){
-
+    this.deletePerson = function(id){
+        for(i in this.people){
+            if(this.people[i] == id){
+                this.people.splice(i, 1);
+                return true;
+            }
+        }
+        return false;
+    };
+    this.putGold = function(amount){
+        if(city.resources.gold >= amount){
+            this.resources.addRemove(amount,0,0);
+            city.resources.addRemove(-amount,0,0);
+        }
     };
 }
 

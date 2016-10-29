@@ -1,3 +1,1 @@
-Settings = function(){
-	this.time = 100;
-}
+var time = 300;

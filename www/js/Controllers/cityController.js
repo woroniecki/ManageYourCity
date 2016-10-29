@@ -1,13 +1,16 @@
 CityController = function() {
-    this.intervalSave = window.setInterval(this.save.bind(this), 500);
+    
 }
 
 CityController.prototype = {
     init: function() {
         this.city = city;
+        this.intervalSave = window.setInterval(this.city.update.bind(this.city), 100);
     },
     dehydrate: function(city) {
         this.city.player = playerController.dehydrate(city.player);
+        this.city.lastGetMoneyTime = city.lastGetMoneyTime;
+        this.city.amountOfDeadPeople = city.amountOfDeadPeople;
         this.city.houses = [];
         for (i in city.houses) {
             this.city.houses.push(HouseController.dehydrate(city.houses[i]));
@@ -29,7 +32,6 @@ CityController.prototype = {
         }
         this.city.resources = ResourcesController.dehydrate(city.resources);
         console.log(city);
-        reload();
     },
     save: function() {
         localStorage.setItem("game", this.hydrate());

@@ -6,9 +6,10 @@ PersonController.dehydrate = function(person) {
     newPerson.sex = person.sex;
     newPerson.hiredIn = person.hiredIn;
     newPerson.homeId = person.homeId;
-    newPerson.resources = ResourcesController.dehydrate(person.resources);
     newPerson.age = person.age;
     newPerson.mood = person.mood;
     newPerson.illness = person.illness;
+    newPerson.lastHealthTime = person.lastHealthTime;
+    newPerson.lookingForJobStamp = person.lookingForJobStamp;
     return newPerson;
 }

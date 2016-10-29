@@ -17,6 +17,13 @@ Resources.prototype = {
 		this.food += food;
 		return true;
 	},
+	isEnough: function(resources){
+		if(resources.gold >= this.gold &&
+			resources.wood >= this.wood &&
+			resources.food >= this.food)
+			return true;
+		return false;
+	},
 	toString: function(){
 		return "g: " + this.gold + " w: " + this.wood + " f: " + this.food;
 	}

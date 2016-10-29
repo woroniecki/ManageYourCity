@@ -3,24 +3,35 @@ function City() {
     this.buildings = [];
     this.people = [];
     this.player = new Player();
-    this.resources = new Resources(0, 0, 0);
+    this.resources = new Resources(5000, 1000, 0);
     this.widthheight = [25, 60];
+    this.amountOfDeadPeople = 0;
 
     this.lastArrivalNewPeopleTime = new Date().getTime();
-    this.arrivalNewPeopleStamp = 0;
+    this.arrivalNewPeopleStamp = 2 * time;
 
     this.lastGetMoneyTime = new Date().getTime();
-    this.getMonetStamp = 0;
+    this.getMoneyStamp = 12 * time;
 }
 
 City.prototype = {
+    init: function() {
+        this.intervalSave = window.setInterval(this.update.bind(this), 500);
+    },
     update: function() {
         this.arrivalNewPeople();
         this.getMoney();
         this.updateBuildings();
-        this.updatePeople();    
+        this.updatePeople();
+        reload();
     },
     buildBuilding: function(name) {
+        var cost = BuildingController.getCost(name);
+        if (!cost.isEnough(this.resources))
+            return false;
+        if (this.isBuildingClose(this.player.coordinates))
+            return false;
+        this.resources.addRemove(-cost.gold, -cost.wood, -cost.food);
         if (name == "House") {
             var building = new House(this.houses.length + this.buildings.length,
                 this.player.coordinates);
@@ -43,6 +54,12 @@ City.prototype = {
         }
         reload();
     },
+    takeUpgradeBuildingCost: function(cost) {
+        if (!cost.isEnough(this.resources))
+            return false;
+        this.resources.addRemove(-cost.gold, -cost.wood, -cost.food);
+        return true;
+    },
     updateHouses: function() {
 
     },
@@ -64,15 +81,14 @@ City.prototype = {
             if (this.people.length < 2) {
                 this.createNewPerson();
             } else {
-                if (this.lastArrivalNewPeopleTime + this.arrivalNewPeopleStamp > new Date().getTime()) {
-                    if (Math.floor(Math.random() * 100) < this.getAveragePeopleHealth()) {
+                if (this.lastArrivalNewPeopleTime + this.arrivalNewPeopleStamp < new Date().getTime()) {
+                    if (Math.floor(Math.random() * 100) <= this.getAveragePeopleHealth()) {
                         this.createNewPerson();
                     }
                     this.lastArrivalNewPeopleTimes += this.arrivalNewPeopleStamp;
                 }
             }
         }
-        s
     },
     getAveragePeopleHealth: function() {
         var averageHealth = 0;
@@ -81,7 +97,7 @@ City.prototype = {
         }
         if (this.people.length <= 0)
             return " - ";
-        return averageHealth / this.people.length;
+        return Math.round(averageHealth / this.people.length);
     },
     createNewPerson: function() {
         var housesWithFreePlaceIds = [];
@@ -92,11 +108,21 @@ City.prototype = {
         var sex = ["Male", "Female"];
         var houseI = housesWithFreePlaceIds[Math.floor(Math.random() * housesWithFreePlaceIds.length)];
         var newPerson = new Person(
-            this.people.length + 1,
+            this.people.length + this.amountOfDeadPeople + 1,
             sex[Math.floor(Math.random() * 1)],
             this.houses[houseI].id);
         this.houses[houseI].addPerson(newPerson.id);
         this.people.push(newPerson);
+    },
+    killPerson: function(id) {
+        for(i in this.people){
+            if(this.people[i].id == id){
+                this.people.splice(i, 1);
+                this.amountOfDeadPeople += 1;
+                return true;
+            }
+        }
+        return false;
     },
     amountFreePlacesInHouses: function() {
         var amount = 0;
@@ -106,20 +132,47 @@ City.prototype = {
     },
     findJobFor: function(id) {
         var buildingWithPlacesToWorkIds = [];
-        for (i in this.buildins) {
-            if (this.buildins[i].getPeopleAmount() > 0)
+        for (i in this.buildings) {
+            if (this.buildings[i].getPeopleAmount() > 0)
                 buildingWithPlacesToWorkIds.push(i);
         }
-        if (!buildingWithPlacesToWorkIds.length > 0)
+
+        if (buildingWithPlacesToWorkIds.length <= 0)
             return;
-        var buildingI = buildingWithPlacesToWorkIds[Math.floor(Math.random() * buildingWithPlacesToWorkIds.length)]
-        this.getPerson(id).hiredIn = this.buildings[buildingI];
+
+        var buildingI = buildingWithPlacesToWorkIds[Math.floor(Math.random() * buildingWithPlacesToWorkIds.length)];
+        this.getPerson(id).hiredIn = this.buildings[buildingI].id;
         this.buildings[buildingI].addPerson(id);
     },
+    isBuildingClose: function(coordinates) {
+        for (i in this.houses)
+            if (this.isInRange(coordinates, this.houses[i].coordinates, 1.5))
+                return true;
+        for (i in this.buildings)
+            if (this.isInRange(coordinates, this.buildings[i].coordinates, 1.5))
+                return true;
+        return false;
+    },
+    anyChurchInRange: function(houseId) {
+        var coordinates = this.getBuilding(houseId).coordinates;
+        if(coordinates == null)
+            return false;
+        for (i in this.buildings)
+            if (this.buildings[i].name == "Church") {
+                if (this.isInRange(coordinates, this.buildings[i].coordinates, this.buildings[i].people.length))
+                    return true;
+            }
+        return false;
+    },
+    isInRange: function(coord1, coord2, range) {
+        if (Math.pow(coord1[0] - coord2[0], 2) + Math.pow(coord1[1] - coord2[1], 2) <= Math.pow(range, 2))
+            return true;
+        return false;
+    },
     getMoney: function() {
-        if (this.lastGetMoneyTime + this.getMonetStamp > new Date.getTime()) {
-            this.resources.addRemove(this.people.length * 50, 0, 0);
-            this.lastGetMoneyTime += this.getMonetStamp;
+        if (this.lastGetMoneyTime + this.getMoneyStamp < new Date().getTime()) {
+            this.resources.addRemove(this.people.length * 25, 0, 0);
+            this.lastGetMoneyTime += this.getMoneyStamp;
         }
     },
     getPerson: function(id) {

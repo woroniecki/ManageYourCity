@@ -25,7 +25,6 @@ Church.prototype = {
     },
     giveSalary: function() {
         if (this.lastCreateResourcesTime + this.createResourcesStamp <= new Date().getTime()) {
-            console.log("??");
             for (i in this.people){
                 city.getBuilding(
                         city.getPerson(this.people[i]).homeId).resources.addRemove(5, 0, 0);

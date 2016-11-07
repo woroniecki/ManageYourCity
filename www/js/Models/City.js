@@ -153,6 +153,22 @@ City.prototype = {
                 return true;
         return false;
     },
+    getWorkersAmount: function() {
+        var workers = {};
+        workers["Sawmill"] = 0;
+        workers["Mill"] = 0;
+        workers["Church"] = 0;
+        workers["City Hall"] = 0;
+        for (i in this.buildings){
+            workers[this.buildings[i].name] += this.buildings[i].people.length;
+        }
+        var workersAmount = 0;
+        for (key in workers){
+            workersAmount += workers[key];
+        }
+        workers["Unemployed"] = this.people.length - workersAmount;
+        return workers;
+    },
     anyChurchInRange: function(houseId) {
         var coordinates = this.getBuilding(houseId).coordinates;
         if(coordinates == null)
@@ -174,6 +190,22 @@ City.prototype = {
             this.resources.addRemove(this.people.length * 25, 0, 0);
             this.lastGetMoneyTime += this.getMoneyStamp;
         }
+    },
+    getWorkersAmount: function() {
+        var workers = {};
+        workers["Sawmill"] = 0;
+        workers["Mill"] = 0;
+        workers["Church"] = 0;
+        workers["City Hall"] = 0;
+        for (i in this.buildings){
+            workers[this.buildings[i].name] += this.buildings[i].people.length;
+        }
+        var workersAmount = 0;
+        for (key in workers){
+            workersAmount += workers[key];
+        }
+        workers["Unemployed"] = this.people.length - workersAmount;
+        return workers;
     },
     getPerson: function(id) {
         for (i in this.people)

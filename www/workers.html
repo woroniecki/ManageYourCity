@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/game.css" />
+    <title></title>
+</head>
+
+<body>
+    <div class="app">
+        <div id="map" class="map">
+            <textarea id="mapArea" rows="26" cols="63" readonly style="text-align: center;">
+</textarea>
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="lib/jquery/jquery-3.1.0.min.js"></script>
+        <script type="text/javascript" src="js//Settings.js"></script>
+        <script type="text/javascript" src="js/Models/Resources.js"></script>
+        <script type="text/javascript" src="js/Models/Person.js"></script>
+        <script type="text/javascript" src="js/Models/Buildings/building.js"></script>
+        <script type="text/javascript" src="js/Models/Buildings/settlement.js"></script>
+        <script type="text/javascript" src="js/Models/Buildings/church.js"></script>
+        <script type="text/javascript" src="js/Models/Buildings/house.js"></script>
+        <script type="text/javascript" src="js/Models/Buildings/mill.js"></script>
+        <script type="text/javascript" src="js/Models/Buildings/sawmill.js"></script>
+        <script type="text/javascript" src="js/Models/City.js"></script>
+        <script type="text/javascript" src="js/Models/Player.js"></script>
+
+        <script type="text/javascript" src="js/Controllers/resourcesController.js"></script>
+        <script type="text/javascript" src="js/Controllers/playerController.js"></script>
+        <script type="text/javascript" src="js/Controllers/cityController.js"></script>
+        <script type="text/javascript" src="js/Controllers/buildingControllers.js"></script>
+        <script type="text/javascript" src="js/Controllers/personController.js"></script>
+
+        <script type="text/javascript" src="js/loader.js"></script>
+        <script type="text/javascript" src="js/workers.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        
+        <script type="text/javascript">
+        app.initialize();
+        </script>
+</body>
+
+</html>

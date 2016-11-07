@@ -24,6 +24,9 @@ Menu.prototype = {
         } else if (window.location.href.indexOf("city.html") > -1) {
             this.options = ["Return"];
         }
+        else if (window.location.href.indexOf("workers.html") > -1) {
+            this.options = ["Return"];
+        }
         this.amount = this.options.length;
         this.reload();
     },
@@ -34,6 +37,8 @@ Menu.prototype = {
             this.setStringForBuild();
         if (window.location.href.indexOf("city.html") > -1)
             this.setStringForCity();
+        if (window.location.href.indexOf("workers.html") > -1)
+            this.setStringForWorkers();
     },
     setStringForBuild: function() {
         var menuString = "";
@@ -46,6 +51,24 @@ Menu.prototype = {
                 menuString += this.options[i] + '\n';
             if (this.options[i] != "Return")
                 menuString += "cost: " + BuildingController.getCost(this.options[i]).toString() + '\n';
+        }
+        $("#mapArea").text(menuString);
+    },
+    setStringForWorkers: function() {
+        var menuString = "Workers\n";
+        var workers = city.getWorkersAmount();
+
+        menuString += "Lumberjacks: " + workers["Sawmill"] + '\n';
+        menuString += "Bakers: " + workers["Mill"] + '\n';
+        menuString += "Priests: " + workers["Church"] + '\n';
+        menuString += "Councilors: " + workers["City Hall"] + '\n';
+        menuString += "Unemployed: " + workers["Unemployed"] + '\n';
+
+        for (i in this.options) {
+            if (i == this.indexNow)
+                menuString += "<--" + this.options[i] + "-->" + '\n';
+            else
+                menuString += this.options[i] + '\n';
         }
         $("#mapArea").text(menuString);
     },

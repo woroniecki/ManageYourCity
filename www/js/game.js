@@ -12,4 +12,8 @@ $("body").keypress(function(e) {
     {
     	window.location = "city.html";
     }
+    if (e.which == 122)
+    {
+        window.location = "workers.html";
+    }
 });

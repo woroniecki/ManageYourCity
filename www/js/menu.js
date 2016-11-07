@@ -13,7 +13,12 @@ Menu.prototype = {
     prepareOptions: function() {
         if (window.location.href.indexOf("building.html") > -1) {
             this.building = city.getBuilding(window.location.href.split('=')[1]);
-            this.options = ["Upgrade", "Put gold", "Take product", "Return"];
+            this.options = ["Upgrade"];
+            if(this.building.name == "Sawmill" || this.building.name == "Mill")
+                this.options.push("Put gold");
+            if(this.building.name != "Church")
+                this.options.push("Take product");
+            this.options.push("Return");
         } else if (window.location.href.indexOf("build.html") > -1) {
             this.options = "House Sawmill Mill Church Settlement Return".split(' ');
         } else if (window.location.href.indexOf("city.html") > -1) {
@@ -48,10 +53,13 @@ Menu.prototype = {
         var menuString = "";
         menuString += "City Resources" + '\n';
         menuString += city.resources.toString() + '\n' + '\n';
+
         menuString += this.building.name + '\n';
         menuString += "People: " + this.building.people.length + '\n';
-        menuString += "Resources" + '\n';
-        menuString += this.building.resources.toString() + '\n';
+        if(this.building.name != "Church"){
+            menuString += "Resources" + '\n';
+            menuString += this.building.resources.toString() + '\n';
+        }
         menuString += "Level: " + this.building.level + '\n';
         for (i in this.options) {
             if (i == this.indexNow)

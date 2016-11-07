@@ -76,6 +76,7 @@ Person.prototype = {
         city.getBuilding(this.homeId).deletePerson(this.id);
         if(this.hiredIn != -1){
             city.getBuilding(this.hiredIn).deletePerson(this.id);
+        }
         city.killPerson(this.id);
         return;
     },

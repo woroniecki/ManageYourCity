@@ -1,1 +1,1 @@
-var time = 300;
+var time = 1000;

@@ -167,6 +167,7 @@ City.prototype = {
             workersAmount += workers[key];
         }
         workers["Unemployed"] = this.people.length - workersAmount;
+        console.log(workers["Unemployed"]);
         return workers;
     },
     anyChurchInRange: function(houseId) {

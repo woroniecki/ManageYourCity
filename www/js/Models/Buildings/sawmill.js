@@ -2,7 +2,6 @@ function Sawmill(id, coordinates) {
     Building.call(this,
         id,
         "Sawmill",
-        8,
         4,
         coordinates
     );
@@ -13,7 +12,7 @@ Sawmill.buildCost = function() {
 }
 
 Sawmill.upgradeCost = function(level) {
-    return new Resources(250 + (level * 30), level * 5, 0);
+    return new Resources(100, 4, 0);
 }
 
 Sawmill.prototype = {

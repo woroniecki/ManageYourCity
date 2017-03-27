@@ -1,8 +1,7 @@
 function Settlement(id, coordinates) {
     Building.call(this,
         id,
-        "Settlement",
-        10,
+        "City Hall",
         5,
         coordinates
     );
@@ -13,7 +12,7 @@ Settlement.buildCost = function() {
 }
 
 Settlement.upgradeCost = function(level) {
-    return new Resources(250 + (level * 150), level * 25, 0);
+    return new Resources(400, 20, 0);
 }
 
 Settlement.prototype = {
@@ -30,7 +29,7 @@ Settlement.prototype = {
                 if (city.isInRange(
                         this.coordinates,
                         city.houses[i].coordinates,
-                        this.people.length)) {
+                        range + this.people.length * rangePerPerson)) {
                     this.resources.addRemove(city.houses[i].resources.gold, 0, 0);
                     city.houses[i].resources.addRemove(-city.houses[i].resources.gold, 0, 0);
                 }

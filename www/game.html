@@ -16,14 +16,17 @@
 <body>
     <div class="app">
         <div id="map" class="map">
-            <textarea id="mapArea" rows="26" cols="63" readonly>
-                
-            </textarea>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="lib/jquery/jquery-3.1.0.min.js"></script>
-        <script type="text/javascript" src="js//Settings.js"></script>
+        <script type="text/javascript" src="lib/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="lib/leaflet1.0.0/leaflet.js"></script>
+        <script type="text/javascript" src="lib/leaflet1.0.0/plugins/easy-button.js"></script>
+        <script type="text/javascript" src="lib/leaflet1.0.0/plugins/MovingMarker.js"></script>
+        <script type="text/javascript" src="lib/leaflet1.0.0/plugins/Modal.min.js"></script>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        
+        <script type="text/javascript" src="js/Settings.js"></script>
         <script type="text/javascript" src="js/Models/Resources.js"></script>
         <script type="text/javascript" src="js/Models/Person.js"></script>
         <script type="text/javascript" src="js/Models/Buildings/building.js"></script>
@@ -34,16 +37,13 @@
         <script type="text/javascript" src="js/Models/Buildings/sawmill.js"></script>
         <script type="text/javascript" src="js/Models/City.js"></script>
         <script type="text/javascript" src="js/Models/Player.js"></script>
-
         <script type="text/javascript" src="js/Controllers/resourcesController.js"></script>
         <script type="text/javascript" src="js/Controllers/playerController.js"></script>
         <script type="text/javascript" src="js/Controllers/cityController.js"></script>
         <script type="text/javascript" src="js/Controllers/buildingControllers.js"></script>
         <script type="text/javascript" src="js/Controllers/personController.js"></script>
-
         <script type="text/javascript" src="js/loader.js"></script>
         <script type="text/javascript" src="js/game.js"></script>
-
         <script type="text/javascript">
         app.initialize();
         </script>

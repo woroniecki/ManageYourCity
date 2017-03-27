@@ -5,44 +5,83 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/game.css" />
+    <link rel="stylesheet" type="text/css" href="css/menu.css" />
     <title></title>
 </head>
 
 <body>
     <div class="app">
-        <div id="map" class="map">
-            <textarea id="mapArea" rows="26" cols="63" readonly style="text-align: center;">
-</textarea>
+        <h1>City</h1>
+        <div class="line" style="display: flex;
+    align-items: center;
+    justify-content: center;">
+            <img id="navimg" style="margin: 0px 10px 0px 0px;" src="img/population.png">
+            <h1 style="float: left;">People amount: </h1><h1 id="peopleamount" style="margin:0px 5px;" >-</h1>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript" src="lib/jquery/jquery-3.1.0.min.js"></script>
-        <script type="text/javascript" src="js//Settings.js"></script>
-        <script type="text/javascript" src="js/Models/Resources.js"></script>
-        <script type="text/javascript" src="js/Models/Person.js"></script>
-        <script type="text/javascript" src="js/Models/Buildings/building.js"></script>
-        <script type="text/javascript" src="js/Models/Buildings/settlement.js"></script>
-        <script type="text/javascript" src="js/Models/Buildings/church.js"></script>
-        <script type="text/javascript" src="js/Models/Buildings/house.js"></script>
-        <script type="text/javascript" src="js/Models/Buildings/mill.js"></script>
-        <script type="text/javascript" src="js/Models/Buildings/sawmill.js"></script>
-        <script type="text/javascript" src="js/Models/City.js"></script>
-        <script type="text/javascript" src="js/Models/Player.js"></script>
 
-        <script type="text/javascript" src="js/Controllers/resourcesController.js"></script>
-        <script type="text/javascript" src="js/Controllers/playerController.js"></script>
-        <script type="text/javascript" src="js/Controllers/cityController.js"></script>
-        <script type="text/javascript" src="js/Controllers/buildingControllers.js"></script>
-        <script type="text/javascript" src="js/Controllers/personController.js"></script>
+        <div class="line" style="display: flex;
+    align-items: center;
+    justify-content: center;">
+            <img id="navimg" style="margin: 0px 10px 0px 0px;" src="img/health.png">
+            <h1 style="float: left;">Average health:</h1><h1 id="avreagehealth" style="margin:0px 5px;" >-</h1>
+        </div>
 
-        <script type="text/javascript" src="js/loader.js"></script>
-        <script type="text/javascript" src="js/cityDetails.js"></script>
-        <script type="text/javascript" src="js/menu.js"></script>
-        
-        <script type="text/javascript">
-        app.initialize();
-        </script>
+        <div class="line" style="display: flex;
+    align-items: center;
+    justify-content: center;">
+            <img id="navimg" style="margin: 0px 10px 0px 0px;" src="img/death.png">
+            <h1 style="float: left;">Deaths:</h1><h1 id="death" style="margin:0px 5px;" >-</h1>
+        </div>
+        <div class="line" style="display: flex;
+    align-items: center;
+    justify-content: center;">
+            <h1>Resources: </h1>
+             <div style="float: left;"><img id="navimg" style="margin: -1px 5px 0px 5px;" src="img/gold.png">
+                <br/>
+                <input class="input" id="gold" readonly type="text" name="gold" value="">
+            </div>
+            <div style="float: left;"><img id="navimg" style="margin: -1px 5px 0px 5px;" src="img/wood.png">
+                <br/>
+                <input class="input" id="wood" readonly type="text" name="wood" value="">
+            </div>
+            <div style="float: left;"><img id="navimg" style="margin: -1px 5px 0px 5px;" src="img/food.png">
+                <br/>
+                <input class="input" id="food" readonly type="text" name="food" value="">
+            </div>
+        </div>
+        <div class="line" style="display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px">
+            <button class="action-button shadow animate yellow" type="button"
+            onclick="pressFunction('Return')">Return</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="js/Settings.js"></script>
+    <script type="text/javascript" src="js/Models/Resources.js"></script>
+    <script type="text/javascript" src="js/Models/Person.js"></script>
+    <script type="text/javascript" src="js/Models/Buildings/building.js"></script>
+    <script type="text/javascript" src="js/Models/Buildings/settlement.js"></script>
+    <script type="text/javascript" src="js/Models/Buildings/church.js"></script>
+    <script type="text/javascript" src="js/Models/Buildings/house.js"></script>
+    <script type="text/javascript" src="js/Models/Buildings/mill.js"></script>
+    <script type="text/javascript" src="js/Models/Buildings/sawmill.js"></script>
+    <script type="text/javascript" src="js/Models/City.js"></script>
+    <script type="text/javascript" src="js/Models/Player.js"></script>
+    <script type="text/javascript" src="js/Controllers/resourcesController.js"></script>
+    <script type="text/javascript" src="js/Controllers/playerController.js"></script>
+    <script type="text/javascript" src="js/Controllers/cityController.js"></script>
+    <script type="text/javascript" src="js/Controllers/buildingControllers.js"></script>
+    <script type="text/javascript" src="js/Controllers/personController.js"></script>
+    <script type="text/javascript" src="js/loader.js"></script>
+    <script type="text/javascript" src="js/cityDetails.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript">
+    app.initialize();
+    </script>
 </body>
 
 </html>

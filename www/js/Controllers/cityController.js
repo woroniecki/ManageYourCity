@@ -21,7 +21,7 @@ CityController.prototype = {
                 this.city.buildings.push(MillController.dehydrate(city.buildings[i]));
             if (city.buildings[i].name == "Sawmill")
                 this.city.buildings.push(SawmillController.dehydrate(city.buildings[i]));
-            if (city.buildings[i].name == "Settlement")
+            if (city.buildings[i].name == "City Hall")
                 this.city.buildings.push(SettlementController.dehydrate(city.buildings[i]));
             if (city.buildings[i].name == "Church")
                 this.city.buildings.push(ChurchController.dehydrate(city.buildings[i]));
@@ -31,7 +31,6 @@ CityController.prototype = {
             this.city.people.push(PersonController.dehydrate(city.people[i]));
         }
         this.city.resources = ResourcesController.dehydrate(city.resources);
-        console.log(city);
     },
     save: function() {
         localStorage.setItem("game", this.hydrate());

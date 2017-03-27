@@ -3,20 +3,20 @@ function City() {
     this.buildings = [];
     this.people = [];
     this.player = new Player();
-    this.resources = new Resources(5000, 1000, 0);
+    this.resources = new Resources(10000, 2000, 0);
     this.widthheight = [25, 60];
     this.amountOfDeadPeople = 0;
-
     this.lastArrivalNewPeopleTime = new Date().getTime();
-    this.arrivalNewPeopleStamp = 2 * time;
+    this.arrivalNewPeopleStamp = 2 * timeStamp;
 
     this.lastGetMoneyTime = new Date().getTime();
-    this.getMoneyStamp = 12 * time;
+    this.getMoneyStamp = 12 * timeStamp;
 }
 
 City.prototype = {
     init: function() {
-        this.intervalSave = window.setInterval(this.update.bind(this), 500);
+        window.setInterval(this.update.bind(this), 500);
+        window.setInterval(this.geoLocate.bind(this), 200);
     },
     update: function() {
         this.arrivalNewPeople();
@@ -25,6 +25,22 @@ City.prototype = {
         this.updatePeople();
         reload();
     },
+    geoLocate: function(){
+        navigator.geolocation.getCurrentPosition(this.successGeoLocate.bind(this), this.errorGeoLocate.bind(this));
+    },
+    successGeoLocate: function(pos){
+        setNavigation(true, "img/navigationButtonOn.png");
+        localStorage.setItem(lastPlayerPosKey, JSON.stringify([pos.coords.latitude, pos.coords.longitude]));
+        if(start){
+            this.player.move([pos.coords.latitude, pos.coords.longitude], 0);
+            start = false;
+        }else{
+            this.player.move([pos.coords.latitude, pos.coords.longitude], 2100);
+        }
+    },
+    errorGeoLocate: function(error){
+        setNavigation(false, "img/navigationButtonOff.png");
+    },
     buildBuilding: function(name) {
         var cost = BuildingController.getCost(name);
         if (!cost.isEnough(this.resources))
@@ -32,22 +48,23 @@ City.prototype = {
         if (this.isBuildingClose(this.player.coordinates))
             return false;
         this.resources.addRemove(-cost.gold, -cost.wood, -cost.food);
+        console.log(this.player.coordinates);
         if (name == "House") {
             var building = new House(this.houses.length + this.buildings.length,
                 this.player.coordinates);
             this.houses.push(building);
         } else {
             var building;
-            if (name == "Sawmill")
+            if (name === "Sawmill")
                 building = new Sawmill(this.houses.length + this.buildings.length,
                     this.player.coordinates);
-            if (name == "Mill")
+            if (name === "Mill")
                 building = new Mill(this.houses.length + this.buildings.length,
                     this.player.coordinates);
-            if (name == "Church")
+            if (name === "Church")
                 building = new Church(this.houses.length + this.buildings.length,
                     this.player.coordinates);
-            if (name == "Settlement")
+            if (name === "City Hall")
                 building = new Settlement(this.houses.length + this.buildings.length,
                     this.player.coordinates);
             this.buildings.push(building);
@@ -92,6 +109,8 @@ City.prototype = {
     },
     getAveragePeopleHealth: function() {
         var averageHealth = 0;
+        if(this.people.length == 0)
+            return 100;
         for (i in this.people) {
             averageHealth += this.people[i].getHealth();
         }
@@ -110,7 +129,8 @@ City.prototype = {
         var newPerson = new Person(
             this.people.length + this.amountOfDeadPeople + 1,
             sex[Math.floor(Math.random() * 1)],
-            this.houses[houseI].id);
+            this.houses[houseI].id,
+            this.getAveragePeopleHealth());
         this.houses[houseI].addPerson(newPerson.id);
         this.people.push(newPerson);
     },
@@ -146,29 +166,12 @@ City.prototype = {
     },
     isBuildingClose: function(coordinates) {
         for (i in this.houses)
-            if (this.isInRange(coordinates, this.houses[i].coordinates, 1.5))
+            if (this.isInRange(coordinates, this.houses[i].coordinates, range))
                 return true;
         for (i in this.buildings)
-            if (this.isInRange(coordinates, this.buildings[i].coordinates, 1.5))
+            if (this.isInRange(coordinates, this.buildings[i].coordinates, range))
                 return true;
         return false;
-    },
-    getWorkersAmount: function() {
-        var workers = {};
-        workers["Sawmill"] = 0;
-        workers["Mill"] = 0;
-        workers["Church"] = 0;
-        workers["City Hall"] = 0;
-        for (i in this.buildings){
-            workers[this.buildings[i].name] += this.buildings[i].people.length;
-        }
-        var workersAmount = 0;
-        for (key in workers){
-            workersAmount += workers[key];
-        }
-        workers["Unemployed"] = this.people.length - workersAmount;
-        console.log(workers["Unemployed"]);
-        return workers;
     },
     anyChurchInRange: function(houseId) {
         var coordinates = this.getBuilding(houseId).coordinates;
@@ -176,37 +179,34 @@ City.prototype = {
             return false;
         for (i in this.buildings)
             if (this.buildings[i].name == "Church") {
-                if (this.isInRange(coordinates, this.buildings[i].coordinates, this.buildings[i].people.length))
+                if (this.isInRange(coordinates, this.buildings[i].coordinates, range + this.buildings[i].people.length * rangePerPerson))
                     return true;
             }
         return false;
     },
-    isInRange: function(coord1, coord2, range) {
-        if (Math.pow(coord1[0] - coord2[0], 2) + Math.pow(coord1[1] - coord2[1], 2) <= Math.pow(range, 2))
+    isInRange: function(coord1, coord2, _range) {
+        if(this.distance(coord1[0],coord1[1],coord2[0],coord2[1],"K") * 1000 <= _range)
             return true;
         return false;
+    },
+    distance: function(lat1, lon1, lat2, lon2, unit) {
+        var radlat1 = Math.PI * lat1 / 180
+        var radlat2 = Math.PI * lat2 / 180
+        var theta = lon1 - lon2
+        var radtheta = Math.PI * theta / 180
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist)
+        dist = dist * 180 / Math.PI
+        dist = dist * 60 * 1.1515
+        if (unit == "K") { dist = dist * 1.609344 }
+        if (unit == "N") { dist = dist * 0.8684 }
+        return dist
     },
     getMoney: function() {
         if (this.lastGetMoneyTime + this.getMoneyStamp < new Date().getTime()) {
             this.resources.addRemove(this.people.length * 25, 0, 0);
             this.lastGetMoneyTime += this.getMoneyStamp;
         }
-    },
-    getWorkersAmount: function() {
-        var workers = {};
-        workers["Sawmill"] = 0;
-        workers["Mill"] = 0;
-        workers["Church"] = 0;
-        workers["City Hall"] = 0;
-        for (i in this.buildings){
-            workers[this.buildings[i].name] += this.buildings[i].people.length;
-        }
-        var workersAmount = 0;
-        for (key in workers){
-            workersAmount += workers[key];
-        }
-        workers["Unemployed"] = this.people.length - workersAmount;
-        return workers;
     },
     getPerson: function(id) {
         for (i in this.people)
@@ -233,6 +233,22 @@ City.prototype = {
                 this.buildings[i].coordinates[1] == this.player.coordinates[1])
                 return this.buildings[i];
         return null;
+    },
+    getWorkersAmount: function() {
+        var workers = {};
+        workers["Sawmill"] = 0;
+        workers["Mill"] = 0;
+        workers["Church"] = 0;
+        workers["City Hall"] = 0;
+        for (i in this.buildings){
+            workers[this.buildings[i].name] += this.buildings[i].people.length;
+        }
+        var workersAmount = 0;
+        for (key in workers){
+            workersAmount += workers[key];
+        }
+        workers["Unemployed"] = this.people.length - workersAmount;
+        return workers;
     },
     getMap: function() {
         var map = new Array(this.widthheight[0]);

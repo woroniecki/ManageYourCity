@@ -1,0 +1,79 @@
+html,
+body,
+.map {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FAF8D1;
+    margin: 0 auto;
+}
+
+.app {
+	width: 100%;
+  	text-align: center;
+}
+
+h1 {
+	font-family: 'Pacifico', cursive;
+	font-size: 25px;
+}
+
+.line {
+	margin: 0px 0px 5px 0px;
+	height: 63px;
+}
+
+.animate
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+.action-button
+{
+	float: left;
+	padding: 10px 0px;
+  	margin: 0px 5px 5px 5px;
+	border-radius: 10px;
+	font-family: 'Pacifico', cursive;
+	font-size: 25px;
+	color: #FFF;
+	width: 35%;
+	text-decoration: none;	
+	border: 0;
+}
+
+.yellow
+{
+	background-color: #F2CF66;
+	border-bottom: 5px solid #D1B358;
+	text-shadow: 0px -2px #D1B358;
+}
+
+.red
+{
+	background-color: #E74C3C;
+	border-bottom: 5px solid #BD3E31;
+	text-shadow: 0px -2px #BD3E31;
+}
+
+.action-button:active
+{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+
+.action-button:focus {outline:0;}
+
+.input{
+	text-align: center;
+	font-family: 'Pacifico', cursive;
+	border: 0;
+	background: transparent;
+	width: 50px;
+	margin: 0px 1px;
+}
+
+.input.focus{outline:0;}

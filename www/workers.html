@@ -5,20 +5,50 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/game.css" />
+    <link rel="stylesheet" type="text/css" href="css/menu.css" />
+    <link rel="stylesheet" type="text/css" href="css/inputrange.css" />
     <title></title>
 </head>
 
 <body>
-    <div class="app">
-        <div id="map" class="map">
-            <textarea id="mapArea" rows="26" cols="63" readonly style="text-align: center;">
-</textarea>
+    <div class="app" id="app">
+        <h1>Workers</h1>
+        <div class="line" style="display: flex;
+    align-items: center;
+    justify-content: center;">
+            <img id="navimg" style="margin: 0px 10px 0px 0px;" src="img/SawmillPeople.png">
+            <h1 style="float: left;">: </h1><h1 id="Sawmill" style="margin:0px 5px;" >-</h1>
+            <img id="navimg" style="margin: 0px 10px 0px 0px;" src="img/MillPeople.png">
+            <h1 style="float: left;">: </h1><h1 id="Mill" style="margin:0px 5px;" >-</h1>
         </div>
+        <div class="line" style="display: flex;
+    align-items: center;
+    justify-content: center;">
+            <img id="navimg" style="margin: 0px 10px 0px 0px;" src="img/ChurchPeople.png">
+            <h1 style="float: left;">: </h1><h1 id="Church" style="margin:0px 5px;" >-</h1>
+            <img id="navimg" style="margin: 0px 10px 0px 0px;" src="img/CityHallPeople.png">
+            <h1 style="float: left;">: </h1><h1 id="CityHall" style="margin:0px 5px;" >-</h1>
+        </div>
+
+        <div class="line" style="display: flex;
+    align-items: center;
+    justify-content: center;">
+            <img id="navimg" style="margin: 0px 10px 0px 0px;" src="img/UnemploymentPeople.png">
+            <h1 style="float: left;">: </h1><h1 id="Unemployed" style="margin:0px 5px;" >-</h1>
+        </div>
+
+        <div class="line" style="display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px">
+            <button class="action-button shadow animate yellow" type="button"
+            onclick="pressFunction('Return')">Return</button>
+        </div>
+    </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="lib/jquery/jquery-3.1.0.min.js"></script>
-        <script type="text/javascript" src="js//Settings.js"></script>
+        <script type="text/javascript" src="js/Settings.js"></script>
         <script type="text/javascript" src="js/Models/Resources.js"></script>
         <script type="text/javascript" src="js/Models/Person.js"></script>
         <script type="text/javascript" src="js/Models/Buildings/building.js"></script>
@@ -37,8 +67,8 @@
         <script type="text/javascript" src="js/Controllers/personController.js"></script>
 
         <script type="text/javascript" src="js/loader.js"></script>
-        <script type="text/javascript" src="js/workers.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/workers.js"></script>
         
         <script type="text/javascript">
         app.initialize();

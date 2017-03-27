@@ -23,22 +23,30 @@ BuildingController.getCost = function(buildingName) {
         return Mill.buildCost();
     if (buildingName === "Church")
         return Church.buildCost();
-    if (buildingName === "Settlement")
+    if (buildingName === "City Hall")
         return Settlement.buildCost();
     return null;
 }
 
 BuildingController.getUpgradeCost = function(buildingName, level) {
+    var amount = 1;
+    var previous = 1;
+    var temp = 0;
+    for(i = 2;i <= level; i++){
+        temp = amount;
+        amount += previous;
+        previous = temp;
+    }
     if (buildingName === "House")
-        return House.upgradeCost(level);
+        return ResourcesController.multiply(House.upgradeCost(),amount);
     if (buildingName === "Sawmill")
-        return Sawmill.upgradeCost(level);
+        return ResourcesController.multiply(Sawmill.upgradeCost(),amount);
     if (buildingName === "Mill")
-        return Mill.upgradeCost(level);
+        return ResourcesController.multiply(Mill.upgradeCost(),amount);
     if (buildingName === "Church")
-        return Church.upgradeCost(level);
-    if (buildingName === "Settlement")
-        return Settlement.upgradeCost(level);
+        return ResourcesController.multiply(Church.upgradeCost(),amount);
+    if (buildingName === "City Hall")
+        return ResourcesController.multiply(Settlement.upgradeCost(),amount);
     return null;
 }
 

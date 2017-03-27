@@ -1,19 +1,16 @@
-function Building(id, name, maxlevel, maxPeople, coordinates, upgradeStamp) {
+function Building(id, name, maxPeople, coordinates, upgradeStamp) {
     this.id = id;
     this.name = name;
     this.level = 1;
-    this.maxlevel = maxlevel;
     this.people = [];
     this.maxPeople = maxPeople;
     this.coordinates = coordinates;
     this.resources = new Resources(0,0,0);
 
     this.lastCreateResourcesTime = new Date().getTime();
-    this.createResourcesStamp = 12 * time;
+    this.createResourcesStamp = 12 * timeStamp;
 
     this.upgrade = function() {
-        if(this.level >= this.maxlevel)
-            return;
         if(city.takeUpgradeBuildingCost(BuildingController.getUpgradeCost(this.name, this.level))){
             this.level = this.level + 1;
             this.maxPeople = this.maxPeople + 1;
@@ -34,8 +31,15 @@ function Building(id, name, maxlevel, maxPeople, coordinates, upgradeStamp) {
     };
     this.addPerson = function(id) {
     	this.people.push(id);
+        if (window.location.href.indexOf("game.html") > -1)
+            if(this.name == "Church" || this.name == "City Hall")
+                BuildingCircle[this.id].setRadius(range + this.people.length * rangePerPerson);
+
     };
     this.deletePerson = function(id){
+        if (window.location.href.indexOf("game.html") > -1)
+            if(this.name == "Church" || this.name == "City Hall")
+                BuildingCircle[this.id].setRadius(range + this.people.length * rangePerPerson);
         for(i in this.people){
             if(this.people[i] == id){
                 this.people.splice(i, 1);

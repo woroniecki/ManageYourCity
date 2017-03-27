@@ -1,17 +1,18 @@
-function Person(id, sex, homeId, age) {
+function Person(id, sex, homeId, average) {
     this.id = id;
     this.sex = sex;
     this.hiredIn = -1;
     this.homeId = homeId;
 
-    this.age = Math.floor(Math.random() * 40);
-    this.mood = Math.floor(Math.random() * 25);
-    this.illness = Math.floor(Math.random() * 25);
+    average =  (100 - average)/3.4;
+    this.age = Math.floor(Math.random() * 20);
+    this.mood = Math.floor(Math.random() * average + 10);
+    this.illness = Math.floor(Math.random() * average + 10);
 
     this.lastHealthTime = new Date().getTime();
-    this.healthStamp = 3 * time;
+    this.healthStamp = 3 * timeStamp;
     this.lastLookingForJobTime = new Date().getTime();
-    this.lookingForJobStamp = 3 * time;
+    this.lookingForJobStamp = 3 * timeStamp;
 }
 
 Person.prototype = {
@@ -26,14 +27,15 @@ Person.prototype = {
             this.updateIllness();
             this.updateResources();
             this.lastHealthTime += this.healthStamp;
-            if(this.getHealth() <= 0)
+            if(this.getHealthWithAge() <= 0)
                 this.die();
         }
     },
     updateLookingForJob: function() {
         if (this.lastLookingForJobTime + this.lookingForJobStamp <= new Date().getTime()) {
             if (this.hiredIn === -1) {
-                city.findJobFor(this.id);
+                if(Math.floor(Math.random() * 100) <= this.getHealth())
+                    city.findJobFor(this.id);
             }
             this.lastLookingForJobTime += this.lookingForJobStamp;
         }
@@ -74,20 +76,24 @@ Person.prototype = {
     },
     die: function() {
         city.getBuilding(this.homeId).deletePerson(this.id);
-        if(this.hiredIn != -1){
+        if(this.hiredIn != -1)
             city.getBuilding(this.hiredIn).deletePerson(this.id);
-        }
         city.killPerson(this.id);
         return;
     },
     workResignation: function() {
         this.hiredIn = -1;
     },
-    takeMoney: function(amount) {
-        money -= amount;
+    getHealthWithAge: function() {
+        var health = (((100 - (this.age - 30)) - this.illness * 1.5) - this.mood * 1.5);
+        if (health < 0)
+            return 0;
+        if (health > 100)
+            return 100;
+        return health;
     },
     getHealth: function() {
-        var health = (((100 - (this.age - 30)) - this.illness) - this.mood);
+        var health = 100  - (this.illness * 1.5) - (this.mood * 1.5);
         if (health < 0)
             return 0;
         if (health > 100)

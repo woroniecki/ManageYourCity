@@ -2,7 +2,6 @@ function House(id, coordinates) {
     Building.call(this,
         id,
         "House",
-        5,
         2,
         coordinates
     );
@@ -13,13 +12,13 @@ House.buildCost = function(){
 }
 
 House.upgradeCost = function(level) {
-    return new Resources(100 + (level * 30), level * 3, 0);
+    return new Resources(50, 2, 0);
 }
 
 House.prototype = {
-    getProfit: function() {
-        //zabiera dla domowników hajs procentowy zależnie od ustawionej daniny
-        //myśle że jakiś timestamp by się przydał
+    takeProduct: function() {
+        city.resources.addRemove(this.resources.gold, 0, 0);
+        this.resources.addRemove(-this.resources.gold, 0, 0);
     }
 }
 

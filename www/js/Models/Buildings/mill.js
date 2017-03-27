@@ -2,7 +2,6 @@ function Mill(id, coordinates) {
     Building.call(this,
         id,
         "Mill",
-        12,
         3,
         coordinates
     );
@@ -14,7 +13,7 @@ Mill.buildCost = function() {
 }
 
 Mill.upgradeCost = function(level) {
-    return new Resources(250 + (level * 50), level * 5, 0);
+    return new Resources(125, 5, 0);
 }
 
 Mill.prototype = {

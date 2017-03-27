@@ -1,9 +1,13 @@
+html,
+body,
 .map {
+    margin: 0;
+    padding: 0;
     width: 100%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin: auto;
-    margin-top: 4px;
+    height: 100%;
+}
+
+.close {
+	visibility: hidden;
 }
     

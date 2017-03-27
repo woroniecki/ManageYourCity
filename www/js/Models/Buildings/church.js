@@ -2,7 +2,6 @@ function Church(id, coordinates) {
     Building.call(this,
         id,
         "Church",
-        10,
         4,
         coordinates
     );
@@ -12,8 +11,8 @@ Church.buildCost = function() {
     return new Resources(1000, 40, 0);
 }
 
-Church.upgradeCost = function(level) {
-    return new Resources(250 + (level * 100), level * 10, 0);
+Church.upgradeCost = function() {
+    return new Resources(200, 10, 0);
 }
 
 Church.prototype = {

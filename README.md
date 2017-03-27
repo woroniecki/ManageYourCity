@@ -49,8 +49,8 @@ If you want to increase amount of citizen you have to take care of places to liv
 <h2>Build instructions</h2>
 <div>Use 
 	<a href="https://build.phonegap.com/">Adobe PhoneGap Build</a>
- to build or use 
- 	<a href="http://docs.phonegap.com/references/desktop-app/">PhoneGap Desktop App</a>.
+  or 
+ 	<a href="http://docs.phonegap.com/references/desktop-app/">PhoneGap Desktop App</a>  to build.
  	</div>
 <div>To emulate game and have option to set geolocation i used 
 <a href="https://www.npmjs.com/package/ripple-emulator">ripple emulator</a>.

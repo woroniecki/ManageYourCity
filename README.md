@@ -14,7 +14,7 @@ control your resources,
 build and upgrade buildings.
 </div>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RDV9srzgkgI" frameborder="0" allowfullscreen></iframe>
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/RDV9srzgkgI/0.jpg)](http://www.youtube.com/watch?v=RDV9srzgkgI "City Mayor")
 
 <h2>Play Instruction</h2>
 <div>
